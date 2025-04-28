@@ -1,11 +1,17 @@
-import { NextFunction, Request, Response } from 'express';
+// src/middlewares/error.middleware.ts
+import { ErrorRequestHandler } from 'express';
+import { HttpError } from '../utils/HttpError';
 
-export function errorMiddleware(
-  err: Error,
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
-  console.error(err.stack);
-  res.status(500).json({ error: err.message || 'Internal Server Error' });
-}
+export const errorHandler: ErrorRequestHandler = (
+  err,   
+  _req,
+  res,
+  _next
+): void => { 
+  if (err instanceof HttpError) {
+    res.status(err.status).json({ message: err.message });
+  } else {
+    console.error(err);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+};

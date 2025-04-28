@@ -1,13 +1,10 @@
 import express from 'express';
-import { errorMiddleware } from './middlewares/error.middleware';
-import users from './routes/users';
+import { errorHandler } from './middlewares/error.middleware';
+import userRoutes from './routes/users.route';
 
-const app = express();
+export const app = express();
 
 app.use(express.json());
+app.use('/users', userRoutes);
 
-app.use('/api/users', users);
-
-app.use(errorMiddleware);
-
-export default app;
+app.use(errorHandler);
