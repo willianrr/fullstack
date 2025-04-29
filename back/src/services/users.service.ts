@@ -1,6 +1,6 @@
 
-import { Users } from '../models/users/users.model';
-import { HttpError } from '../utils/HttpError';
+import { Users } from '@models/users/users.model';
+import { HttpError } from '@utils/HttpError';
 
 export default class UserService {
 

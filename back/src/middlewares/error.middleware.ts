@@ -1,6 +1,5 @@
-// src/middlewares/error.middleware.ts
+import { HttpError } from '@utils/HttpError';
 import { ErrorRequestHandler } from 'express';
-import { HttpError } from '../utils/HttpError';
 
 export const errorHandler: ErrorRequestHandler = (
   err,   

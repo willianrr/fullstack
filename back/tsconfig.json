@@ -6,7 +6,18 @@
 	  "strict": true,
 	  "esModuleInterop": true,
 	  "skipLibCheck": true,
-	  "forceConsistentCasingInFileNames": true
+	  "forceConsistentCasingInFileNames": true,
+	  "baseUrl": "src",
+		"paths": {
+		"@models/*": ["models/*"],
+		"@services/*": ["services/*"],
+		"@utils/*": ["utils/*"],
+		"@controllers/*": ["controllers/*"],
+		"@middlewares/*": ["middlewares/*"],
+		"@routes/*": ["routes/*"],
+		"@validations/*": ["validations/*"],
+		"@config/*": ["config/*"]
+		},
 	},
 	"include": ["src/**/*.ts"],
 	"exclude": ["node_modules"]

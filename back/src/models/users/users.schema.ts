@@ -42,10 +42,30 @@ export const UsersSchemaValidate = Joi.object({
     }),
 });
 
+export const LoginSchemaValidate = Joi.object({
+	email: Joi.string()
+	  .email({ tlds: { allow: false } })
+	  .required()
+	  .messages({
+		'string.email': 'Email inválido.',
+		'string.empty': 'Email é obrigatório.',
+	  }),
+  
+	senha: Joi.string()
+	  .min(6)
+	  .required()
+	  .messages({
+		'string.min': 'Senha deve ter pelo menos 6 caracteres.',
+		'string.empty': 'Senha é obrigatória.',
+	  }),
+  });
+
 export interface IUsers {
 	nome: string;
 	email: string;
 	telefone: string;
 	dataNascimento: string;
 	senha: string;
-  }
+}
+
+export type LoginDTO = Pick<IUsers, 'email' | 'senha'>;
