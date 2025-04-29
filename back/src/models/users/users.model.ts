@@ -11,9 +11,11 @@ export interface UserAttributes {
   telefone: string;
   dataNascimento: string;
   senha: string;
+  role: 'user' | 'admin';
 }
 
-export interface UserCreationAttributes extends Optional<UserAttributes, 'id'> {}
+export interface UserCreationAttributes
+  extends Optional<UserAttributes, 'id' | 'role'> {}
 
 export class Users
   extends Model<UserAttributes, UserCreationAttributes>
@@ -25,10 +27,12 @@ export class Users
   public telefone!: string;
   public dataNascimento!: string;
   public senha!: string;
+  public role!: 'user' | 'admin';
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 
+  
   public validPassword(password: string): Promise<boolean> {
     return bcrypt.compare(password, this.senha);
   }
@@ -41,25 +45,36 @@ Users.init(
       autoIncrement: true,
       primaryKey: true,
     },
+
+    role: {
+      type: DataTypes.ENUM('user', 'admin'),
+      allowNull: false,
+      defaultValue: 'user',
+    },
+
     nome: {
       type: DataTypes.STRING,
       allowNull: false,
     },
+
     email: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
       validate: { isEmail: true },
     },
+
     telefone: {
       type: DataTypes.STRING,
       allowNull: false,
     },
+
     dataNascimento: {
       type: DataTypes.DATEONLY,
       allowNull: false,
       field: 'data_nascimento',
     },
+
     senha: {
       type: DataTypes.STRING,
       allowNull: false,

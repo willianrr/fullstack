@@ -66,6 +66,7 @@ export interface IUsers {
 	telefone: string;
 	dataNascimento: string;
 	senha: string;
+	role: 'user' | 'admin';
 }
 
 export type LoginDTO = Pick<IUsers, 'email' | 'senha'>;

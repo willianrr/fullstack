@@ -22,6 +22,7 @@ export default class UserService {
     telefone: string;
     dataNascimento: string;
     senha: string;
+	role: 'user' | 'admin';
   }): Promise<Users> {
     return Users.create(data as any);
   }
