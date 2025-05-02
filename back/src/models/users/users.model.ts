@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import { DataTypes, Model, Optional } from 'sequelize';
 import { sequelize } from '../../config';
 
@@ -11,7 +11,7 @@ export interface UserAttributes {
   telefone: string;
   dataNascimento: string;
   senha: string;
-  role: 'user' | 'admin';
+  role?: 'user' | 'admin';
 }
 
 export interface UserCreationAttributes

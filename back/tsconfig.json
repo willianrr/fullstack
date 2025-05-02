@@ -1,14 +1,16 @@
+// back/tsconfig.json
 {
 	"compilerOptions": {
 	  "target": "es2020",
 	  "module": "commonjs",
-	  "outDir": "dist",
+	  "rootDir": "src",      // garante que o TS pegue tudo em src/
+	  "outDir": "dist",      // e solte tudo em dist/
 	  "strict": true,
 	  "esModuleInterop": true,
 	  "skipLibCheck": true,
 	  "forceConsistentCasingInFileNames": true,
 	  "baseUrl": "src",
-		"paths": {
+	  "paths": {
 		"@models/*": ["models/*"],
 		"@services/*": ["services/*"],
 		"@utils/*": ["utils/*"],
@@ -17,8 +19,9 @@
 		"@routes/*": ["routes/*"],
 		"@validations/*": ["validations/*"],
 		"@config/*": ["config/*"]
-		},
+	  }
 	},
-	"include": ["src/**/*.ts"],
-	"exclude": ["node_modules"]
+	"include": ["src/**/*"],
+	"exclude": ["node_modules", "dist"]
   }
+  

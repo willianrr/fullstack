@@ -1,17 +1,23 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import * as z from 'zod';
+import { useAuth } from '../../contexts/AuthContext';
+import { login as svcLogin } from '../../service/loginService';
 
 const loginSchema = z.object({
   email: z.string().email('Formato de email inválido'),
-  password: z.string().min(6, 'Senha deve ter ao menos 6 caracteres'),
+  senha: z.string().min(6, 'Senha deve ter ao menos 6 caracteres'),
 });
 
 type LoginFormData = z.infer<typeof loginSchema>;
 
-const LoginPages: React.FC = () => {
+const Login: React.FC = () => {
   const [serverError, setServerError] = useState('');
+  const navigate = useNavigate();
+  const { login } = useAuth();
   const {
     register,
     handleSubmit,
@@ -23,7 +29,10 @@ const LoginPages: React.FC = () => {
   const onSubmit = async (data: LoginFormData) => {
     setServerError('');
     try {
-      console.log('Login enviado:', data);
+      const response = await svcLogin(data);
+      login(response.token);                        
+      toast.success('Login realizado com sucesso.');
+      navigate('/users');                        
     } catch (err: any) {
       setServerError(err.message || 'Erro ao autenticar.');
     }
@@ -58,18 +67,18 @@ const LoginPages: React.FC = () => {
           </div>
 
           <div className="mb-6">
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="senha" className="block text-sm font-medium text-gray-700 mb-1">
               Senha
             </label>
             <input
-              id="password"
+              id="senha"
               type="password"
-              {...register('password')}
+              {...register('senha')}
               className={`w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400 
-                ${errors.password ? 'border-red-500' : 'border-gray-300'}`}
+                ${errors.senha ? 'border-red-500' : 'border-gray-300'}`}
             />
-            {errors.password && (
-              <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
+            {errors.senha && (
+              <p className="text-red-500 text-sm mt-1">{errors.senha.message}</p>
             )}
           </div>
 
@@ -86,4 +95,4 @@ const LoginPages: React.FC = () => {
   );
 };
 
-export default LoginPages;
+export default Login;

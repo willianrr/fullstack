@@ -10,12 +10,11 @@ import { validateUserBody } from '@validations/validateUserBody';
 import { Router } from 'express';
 
 const router = Router();
-
 router.use(authenticate);
 
+router.get('/',    getAll);
 router.put('/:id', validateUserBody, update);
 router.post('/', validateUserBody, create);
-router.get('/',    getAll);
 router.get('/:id', getById);
 router.delete('/:id', remove);
 
